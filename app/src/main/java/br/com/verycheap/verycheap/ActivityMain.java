@@ -161,6 +161,7 @@ public class ActivityMain extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONArray result) {
             String dthEmissaoUltimaVenda;
+            String nomeEmpresa;
 
             try {
                 ArrayList<Itens> Item = new ArrayList<Itens>();
@@ -170,6 +171,12 @@ public class ActivityMain extends AppCompatActivity {
                 for (int i = 0; i < result.length(); i++) {
 
                     JSONObject resultado = result.getJSONObject(i);
+
+                    if (resultado.getString("nomFantasia") != "null") {
+                        nomeEmpresa = resultado.getString("nomFantasia");
+                    } else {
+                        nomeEmpresa = resultado.getString("nomRazaoSocial");
+                    }
 
                     int dias1 = dias.quantidadeDias(resultado.getString("dthEmissaoUltimaVenda").substring(0, 10));
                     String hora = resultado.getString("dthEmissaoUltimaVenda").substring(11, 16);
@@ -184,7 +191,7 @@ public class ActivityMain extends AppCompatActivity {
                         dthEmissaoUltimaVenda = "Hoje " + "às " + hora;
                     }
 
-                    Item.add(new Itens(resultado.getString("nomRazaoSocial"),
+                    Item.add(new Itens(nomeEmpresa,
                             "R$: " + resultado.getString("valUltimaVenda"),
                             "Bairro: " + resultado.getString("nomBairro"),
                             "Descrição: " + resultado.getString("dscProduto"),
