@@ -14,10 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +23,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import br.com.verycheap.verycheap.API.Itens;
 import br.com.verycheap.verycheap.API.SefazApi;
 import br.com.verycheap.verycheap.Permissao.PermissionUtils;
 
@@ -72,98 +68,6 @@ public class ActivityMain extends AppCompatActivity {
         Processo processo = new Processo(this);
         processo.execute();
 
-
-     /*   try {
-            ArrayList<Itens> Item = new ArrayList<Itens>();
-
-            for (int i = 0; i < processo.getResult().length(); i++) {
-
-                JSONObject resultado = processo.getResult().getJSONObject(i);
-
-
-                Item.add(new Itens(resultado.getString("nomRazaoSocial"),
-                        "R$: " + resultado.getString("valUltimaVenda"),
-                        "Bairro: " + resultado.getString("nomBairro"),
-                        "Descrição: " + resultado.getString("dscProduto"),
-                        "Dias: " + resultado.getString("dthEmissaoUltimaVenda")));
-
-            }
-
-            PessoaAdapter adapter = new PessoaAdapter(Item);
-            rv.setAdapter(adapter);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        */
-
-
-      /*  double lat;
-        double lon;
-
-        try {
-            StrictMode.ThreadPolicy policy =
-                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            SefazApi SefazApi = new SefazApi();
-
-            // VerificaLocalizacao();
-
-            // Inicio Localização
-            LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            // Verifica se o GPS está ativo
-            boolean enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            // Caso não esteja ativo abre um novo diálogo com as configurações para  realizar se ativamento
-            if (!enabled) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-            }
-
-
-            String localizacao = "";
-            Location location = lm.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-            if (location != null) {
-                lat = location.getLatitude();
-                lon = location.getLongitude();
-
-            } else {
-
-                lat = 0.0;
-                lon = 0.0;
-
-            }
-
-            // Fim Localização
-
-            JSONArray result = SefazApi.RequisicaoApi(edtDescricao.getText(), lat, lon);
-
-            ArrayList<Itens> Item = new ArrayList<Itens>();
-
-            for (int i = 0; i < result.length(); i++) {
-
-                JSONObject resultado = result.getJSONObject(i);
-
-
-                Item.add(new Itens(resultado.getString("nomRazaoSocial"),
-                        "R$: " + resultado.getString("valUltimaVenda"),
-                        "Bairro: " + resultado.getString("nomBairro"),
-                        "Descrição: " + resultado.getString("dscProduto"),
-                        "Dias: " + resultado.getString("dthEmissaoUltimaVenda")));
-
-            }
-
-            PessoaAdapter adapter = new PessoaAdapter(Item);
-            rv.setAdapter(adapter);
-
-            //ArrayAdapter<Itens> adapter = new ArrayAdapter<Itens>(this, android.R.layout.simple_list_item_1, Item);
-
-            // listView.setAdapter(adapter);
-
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }*/
-
     }
 
 
@@ -173,7 +77,7 @@ public class ActivityMain extends AppCompatActivity {
         private Context context;
         private double lat;
         private double lon;
-       // private JSONArray result;
+        // private JSONArray result;
 
 
         Processo(Context context) {
@@ -208,7 +112,6 @@ public class ActivityMain extends AppCompatActivity {
 
 
                 // this.result = result;
-
 
 
                 // listView.setAdapter(adapter);
@@ -257,31 +160,42 @@ public class ActivityMain extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONArray result) {
-            //Cancela progressDialogo
+            String dthEmissaoUltimaVenda;
 
             try {
                 ArrayList<Itens> Item = new ArrayList<Itens>();
+                DiasEntreDataAtual dias = new DiasEntreDataAtual();
+
 
                 for (int i = 0; i < result.length(); i++) {
 
                     JSONObject resultado = result.getJSONObject(i);
 
+                    int dias1 = dias.quantidadeDias(resultado.getString("dthEmissaoUltimaVenda").substring(0, 10));
+                    String hora = resultado.getString("dthEmissaoUltimaVenda").substring(11, 16);
+
+                    if (dias1 != 0) {
+                        if (dias1 == 1) {
+                            dthEmissaoUltimaVenda = "Ontem " + "às " + hora;
+                        } else {
+                            dthEmissaoUltimaVenda = "Há " + dias1 + " dias " + "às " + hora;
+                        }
+                    } else {
+                        dthEmissaoUltimaVenda = "Hoje " + "às " + hora;
+                    }
 
                     Item.add(new Itens(resultado.getString("nomRazaoSocial"),
                             "R$: " + resultado.getString("valUltimaVenda"),
                             "Bairro: " + resultado.getString("nomBairro"),
                             "Descrição: " + resultado.getString("dscProduto"),
-                            "Dias: " + resultado.getString("dthEmissaoUltimaVenda")));
-
+                            dthEmissaoUltimaVenda));
                 }
 
-                PessoaAdapter adapter = new PessoaAdapter(Item);
+                ItensAdapter adapter = new ItensAdapter(Item);
                 rv.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
 
 
             progress.setMessage("Carregado!");

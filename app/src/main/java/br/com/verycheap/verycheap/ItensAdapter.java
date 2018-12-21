@@ -1,22 +1,21 @@
 package br.com.verycheap.verycheap;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.verycheap.verycheap.API.Itens;
-
-public class PessoaAdapter extends RecyclerView.Adapter<PessoaAdapter.PessoaViewHolder> {
+public class ItensAdapter extends RecyclerView.Adapter<ItensAdapter.PessoaViewHolder> {
 
     List<Itens> itens;
 
-    PessoaAdapter(List<Itens> itens) {
+    ItensAdapter(List<Itens> itens) {
         this.itens = itens;
     }
 
@@ -56,7 +55,6 @@ public class PessoaAdapter extends RecyclerView.Adapter<PessoaAdapter.PessoaView
         viewHolder.nomBairro.setText(itens.get(i).getNomBairro());
         viewHolder.dscProduto.setText(itens.get(i).getDscProduto());
         viewHolder.dthEmissaoUltimaVenda.setText(itens.get(i).getDthEmissaoUltimaVenda());
-
     }
 
     @Override

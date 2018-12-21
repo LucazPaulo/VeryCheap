@@ -1,4 +1,4 @@
-package br.com.verycheap.verycheap.API;
+package br.com.verycheap.verycheap;
 
 import br.com.verycheap.verycheap.DiasEntreDataAtual;
 
@@ -10,7 +10,7 @@ public class Itens {
     private String dthEmissaoUltimaVenda;
 
     public Itens() {
-        }
+    }
 
     public Itens(String nomRazaoSocial, String valUltimaVenda, String nomBairro, String dscProduto, String dthEmissaoUltimaVenda) {
         this.nomRazaoSocial = nomRazaoSocial;

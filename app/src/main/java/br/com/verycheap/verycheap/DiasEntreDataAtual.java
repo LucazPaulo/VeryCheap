@@ -28,6 +28,6 @@ public class DiasEntreDataAtual {
             e.printStackTrace();
         }
 
-        return 0;
+        return 999;
     }
 }
