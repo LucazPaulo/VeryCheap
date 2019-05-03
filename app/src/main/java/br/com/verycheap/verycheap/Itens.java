@@ -8,16 +8,20 @@ public class Itens {
     private String nomBairro;
     private String dscProduto;
     private String dthEmissaoUltimaVenda;
+    private String lat;
+    private String lon;
 
     public Itens() {
     }
 
-    public Itens(String nomRazaoSocial, String valUltimaVenda, String nomBairro, String dscProduto, String dthEmissaoUltimaVenda) {
+    public Itens(String nomRazaoSocial, String valUltimaVenda, String nomBairro, String dscProduto, String dthEmissaoUltimaVenda, String lat, String lon) {
         this.nomRazaoSocial = nomRazaoSocial;
         this.valUltimaVenda = valUltimaVenda;
         this.nomBairro = nomBairro;
         this.dscProduto = dscProduto;
         this.dthEmissaoUltimaVenda = dthEmissaoUltimaVenda;
+        this.lat = lat;
+        this.lon = lon;
 
     }
 
@@ -59,5 +63,21 @@ public class Itens {
 
     public void setDthEmissaoUltimaVenda(String dthEmissaoUltimaVenda) {
         this.dthEmissaoUltimaVenda = dthEmissaoUltimaVenda;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
     }
 }

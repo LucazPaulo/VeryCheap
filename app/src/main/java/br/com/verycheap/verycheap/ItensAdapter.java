@@ -1,12 +1,12 @@
 package br.com.verycheap.verycheap;
 
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -26,6 +26,7 @@ public class ItensAdapter extends RecyclerView.Adapter<ItensAdapter.PessoaViewHo
         TextView nomBairro;
         TextView dscProduto;
         TextView dthEmissaoUltimaVenda;
+        ImageView imageView;
 
 
         PessoaViewHolder(View itemView) {
@@ -35,6 +36,7 @@ public class ItensAdapter extends RecyclerView.Adapter<ItensAdapter.PessoaViewHo
             nomBairro = itemView.findViewById(R.id.nomBairro);
             dscProduto = itemView.findViewById(R.id.dscProduto);
             dthEmissaoUltimaVenda = itemView.findViewById(R.id.dthEmissaoUltimaVenda);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 
@@ -55,11 +57,36 @@ public class ItensAdapter extends RecyclerView.Adapter<ItensAdapter.PessoaViewHo
         viewHolder.nomBairro.setText(itens.get(i).getNomBairro());
         viewHolder.dscProduto.setText(itens.get(i).getDscProduto());
         viewHolder.dthEmissaoUltimaVenda.setText(itens.get(i).getDthEmissaoUltimaVenda());
+
+
+        if (viewHolder.dthEmissaoUltimaVenda.getText().subSequence(0, 4).equals("Hoje")) {
+
+            Drawable drawable = viewHolder.imageView.getResources().getDrawable(R.drawable.bol_verde);
+            viewHolder.imageView.setImageDrawable(drawable);
+
+        } else if (viewHolder.dthEmissaoUltimaVenda.getText().subSequence(0, 5).equals("Ontem")) {
+
+            Drawable drawable = viewHolder.imageView.getResources().getDrawable(R.drawable.bol_queiroz);
+            viewHolder.imageView.setImageDrawable(drawable);
+
+        } else {
+
+            Drawable drawable = viewHolder.imageView.getResources().getDrawable(R.drawable.bol_vermelha);
+            viewHolder.imageView.setImageDrawable(drawable);
+
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
         return itens.size();
+    }
+
+
+    public Itens getItem(int position) {
+        return itens.get(position);
     }
 
 }

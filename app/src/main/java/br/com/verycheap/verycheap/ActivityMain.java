@@ -111,45 +111,6 @@ public class ActivityMain extends AppCompatActivity {
                 result = SefazApi.RequisicaoApi(edtDescricao.getText(), this.lat, this.lon);
 
 
-                // this.result = result;
-
-
-                // listView.setAdapter(adapter);
-
-               /* for (int i = 0; i < 7; i++) {
-
-                    JSONObject resultado = result.getJSONObject(i);
-
-                    String nomeEmpresa;
-
-                    if (resultado.getString("nomFantasia") != null) {
-                        nomeEmpresa = resultado.getString("nomFantasia");
-                    } else {
-                        nomeEmpresa = resultado.getString("nomRazaoSocial");
-                    }
-
-                    String valUltimaVenda = resultado.getString("valUltimaVenda");
-                    String nomBairro = resultado.getString("nomBairro");
-                    String dscProduto = resultado.getString("dscProduto");
-                    String dthEmissaoUltimaVenda = resultado.getString("dthEmissaoUltimaVenda");
-
-
-                    //Cacula a diferença de dias
-
-                    DiasEntreDataAtual dias = new DiasEntreDataAtual();
-                    int dias1 = dias.quantidadeDias(dthEmissaoUltimaVenda.substring(0, 10));
-
-
-                    tvLista.append("Descriçao: " + dscProduto + "\n");
-                    tvLista.append("Empresa: " + nomeEmpresa + "\n");
-                    tvLista.append("Valor: R$" + valUltimaVenda + "\n");
-                    tvLista.append("Bairro: " + nomBairro + "\n");
-                    tvLista.append("Ha " + dias1 + " dias atras." + " \n");
-                    tvLista.append("\n\n");
-
-
-                }*/
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -170,7 +131,9 @@ public class ActivityMain extends AppCompatActivity {
 
                 for (int i = 0; i < result.length(); i++) {
 
+
                     JSONObject resultado = result.getJSONObject(i);
+
 
                     if (resultado.getString("nomFantasia") != "null") {
                         nomeEmpresa = resultado.getString("nomFantasia");
@@ -195,7 +158,9 @@ public class ActivityMain extends AppCompatActivity {
                             "R$: " + resultado.getString("valUltimaVenda"),
                             "Bairro: " + resultado.getString("nomBairro"),
                             "Descrição: " + resultado.getString("dscProduto"),
-                            dthEmissaoUltimaVenda));
+                            dthEmissaoUltimaVenda,
+                            resultado.getString("numLatitude"),
+                            resultado.getString("numLatitude")));
                 }
 
                 ItensAdapter adapter = new ItensAdapter(Item);
